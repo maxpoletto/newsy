@@ -1,0 +1,70 @@
+Background:
+
+I am trying to keep track of the Trump administration's policies and actions, to create a historical record and to try to activate my friends and family to what is happening in the United States.
+
+Every day I read the news and find, on average, 10 or so important news items, one per browser tab. I wrote a browser extension that collects all the open tabs and writes them to a file (in the format you see in the attached file).
+
+Each entry consists of the URL and title, but no content. The entries are roughly but not completely chronological (sometimes I find a news item that is some days old).
+
+The attached file 'Trump diary days 0001-0200.txt' contains 2073 entries, from days 1 - 200 of the Trump administration.
+
+Goals:
+
+(1) Label each entry with tags that describe its content. Tags are lower-case alphanumeric and can be hyphenated. A possible set of tags is
+{ science, health, education, environment, civil-society, human-rights, government, justice, immigration, trade, economy, foreign-affairs }. I am open to suggestions from you about other possible tag values.
+
+(2) Create an "index" page where items can be viewed / searched by tag. More details on this below.
+
+(3) Create a "summary" page that describes the high-level themes, e.g., as in the attached file summary-example.html (a one-off that I generated using AI a couple months ago), with links to relevant articles (linked to the index page).
+
+(4) To the extent possible, the process should be easily repeatable in the future. Maybe this means using your API rather than the chat UI?.
+
+(5) Stretch goal: archive the content of the linked articles (in the index page, there could be the option to go to the original or the archived page).
+
+Details:
+
+(1) Page and site structure.
+
+The site has two sections (maybe identified by two tabs visible at the top, but I am open to other suggestions), "Thematic summary" and "Chronology", corresponding to the summary page and index page respectively.
+
+All server-side items are static (json, html). Any interactivity is implemented client-side in Javascript.
+
+The site is structured in such a way that several instances can be served side by side (e.g., "first 200 days", "first year", "second year", etc.), with a top-level landing page (created manually) pointing to each instance.
+
+(2) Index page.
+
+(2.a) The content should be a json file (served compressed). All controls are client-side.
+
+(2.b) The page shows the set of tags in a control section at the top, and entries (articles) below, in chronological order. If chronological order is difficult to ascertain exactly (e.g., not all URLs contain YYYY/MM/DD, etc.), the order in the original .txt file is ok.
+
+(2.c) Tags in the control section are displayed in color-coded rectangles and are clickable. Clicking one or more tags hides/displays the corresponding articles. On first load, all tags are selected. The URL contains the list of selected tags (or all if the parameter is missing in the URL).
+
+(2.d) Each entry is displayed with its title hyperlinked to the original source. If we achieve goal (5), then there is another link, '[local]', that points to the local archived copy.
+
+(2.e) After the title and optional local link, each entry line contains one or more tags. The tags are color-coded here also, and clickable, with exactly the same function as in the control section. Of course, if an entry has only one tag and that tag is clicked (deselected), it and other entries that have only that tag disappear and can only be displayed again by going to the control section.
+
+(3) Summary page.
+
+We need to identify a set of themes and create text for each of those themes. Maybe the cleanest, most rational approach is to have the themes match 1-1 with tags, but I am open to other approaches.
+
+Each theme has a title plus some text (2-3 pagraphs) that summarizes the situation and provides links to articles (hyperlinked to the original, plus an optional link to the locally archived version if any).
+
+(4) Special note about bsky.app.
+
+Bluesky does not set a meaningful title on its pages (just something like "post by foo@bar.com - Bluesky"). We necessarily need to fetch the content to understand the post. In rare cases it may be necessary to fetch a quoted post.
+
+(5) Content archives.
+
+Some of the content, e.g., nytimes.com or ft.com requires a subscription, which I have. Is it possible to somehow make my credentials available to a script?
+
+If we do implement archives, they should go into a directory archive/ and subdirectories of the form NNNN_TITLE where NNNN is a number corresponding to position in the input .txt file, and TITLE is a mangled form of the title, with spaces replaced by underscores, no punctuation, all lowercase, truncated to 15 characters.
+
+(6) **Special note about accuracy and truthfulness**
+
+IT IS ABSOLUTELY IMPERATIVE THAT THE CONTENT ACCURATELY REFLECT THE SOURCES. I REPEAT: TRUTHFULNESS AND ACCURACY ARE OF PARAMOUNT IMPORTANCE.
+
+I will manually review all generated theme summaries, but please help make my job less difficult.
+If you feel there is any risk of hallucinations or you are uncertain about anything, ask me.
+
+
+Please ask me any clarifying questions, and before implementing anything, let's discuss possible automation strategies.
